@@ -9,13 +9,13 @@
 
 (defrecord Customer [status])
 
-(defrecord Purchase [cost])
+(defrecord Purchase [cost item])
 
 (defrecord Discount [reason percent])
 
 (defrecord Total [total])
 
-(defrecord Coupon [percent])
+(defrecord Promotion [reason type])
 
 ;;;; Some example rules. ;;;;
 
@@ -24,6 +24,7 @@
   =>
   (insert! (->Total ?total)))
 
+;;; Discounts.
 (defrule summer-special
   "Place an order in the summer and get 20% off!"
   [Order (#{:june :july :august} month)]
@@ -46,6 +47,24 @@
   []
   [?discount <- max-discount :from [Discount]])
 
+;;; Promotions.
+(defrule free-widget-month
+  "All purchases over $200 in August get a free widget."
+  [Order (= :august month)]
+  [Total (> total 200)]
+  =>
+  (insert! (->Promotion :free-widget-month :widget)))
+
+(defrule free-lunch-with-gizmo
+  "Anyone who purchases a gizmo gets a free lunch."
+  [Purchase (= item :gizmo)]
+  =>
+  (insert! (->Promotion :free-lunch-with-gizmo :lunch)))
+
+(defquery get-promotions
+  "Query to find promotions for the purchase."
+  []
+  [?promotion <- Promotion])
 
 ;;;; The section below shows this example in action. ;;;;
 
@@ -59,27 +78,40 @@
 
   session)
 
+(defn print-promotions!
+  "Prints promotions from the given session"
+  [session]
+
+  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions {})] 
+    (println "Free" type "for promotion" reason))
+  
+  session)
+
 (defn run-examples 
   "Function to run the above example."
   []
   (println "VIP shopping example:")
   ;; prints "10 % :vip discount"
   (-> (mk-session 'clara.examples.shopping) ; Load the rules.
-      (insert (->Customer :vip)) ; Insert some facts.
-      (insert (->Order 2013 :march 20))
-      (insert (->Purchase 20))
-      (insert (->Purchase 120))
+      (insert (->Customer :vip)
+              (->Order 2013 :march 20)
+              (->Purchase 20 :gizmo)
+              (->Purchase 120 :widget)) ; Insert some facts.
       (fire-rules)
       (print-discounts!))
 
-  (println "Summer special example:")
-  ;; prints "20 % :summer-special discount"
+  (println "Summer special and widget promotion example:")
+  ;; prints: "20 % :summer-special discount"
+  ;;         "Free :lunch for promotion :free-lunch-for-gizmo"
+  ;;         "Free :widget for promotion :free-widget-month"
   (-> (mk-session 'clara.examples.shopping) ; Load the rules.
-      (insert (->Customer :vip)) ; Insert some facts.
-      (insert (->Order 2013 :july 20))
-      (insert (->Purchase 20))
-      (insert (->Purchase 120))
+      (insert (->Customer :vip)
+              (->Order 2013 :august 20)
+              (->Purchase 20 :gizmo)
+              (->Purchase 120 :widget)
+              (->Purchase 90 :widget)) ; Insert some facts.
       (fire-rules)
-      (print-discounts!))
+      (print-discounts!)
+      (print-promotions!))
 
   nil)
