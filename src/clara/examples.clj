@@ -1,5 +1,10 @@
 (ns clara.examples
-  (require [clara.examples.shopping :as shopping]))
+  (require [clara.examples.shopping :as shopping]
+           [clara.examples.validation :as validation]))
 
 (defn -main []
-  (shopping/run-examples))
+  (println "Shopping examples:")
+  (shopping/run-examples)
+  (println)
+  (println "Validation examples:")
+  (validation/run-examples))
