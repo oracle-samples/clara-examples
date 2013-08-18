@@ -54,7 +54,7 @@
 
 (defn validate! [session]
   (doseq [result (query session check-job {})]
-    (println "Validation error: " (get-in result [:?issue :description]))))
+    (println "Validation issue: " (get-in result [:?issue :description]))))
 
 (defn run-examples 
   "Function to run the above example."
