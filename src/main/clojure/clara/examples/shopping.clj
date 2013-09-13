@@ -73,7 +73,7 @@
   [session]
 
   ;; Destructure and print each discount.
-  (doseq [{{reason :reason percent :percent} :?discount} (query session get-best-discount {})] 
+  (doseq [{{reason :reason percent :percent} :?discount} (query session get-best-discount)] 
     (println percent "%" reason "discount"))
 
   session)
@@ -82,7 +82,7 @@
   "Prints promotions from the given session"
   [session]
 
-  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions {})] 
+  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions)] 
     (println "Free" type "for promotion" reason))
   
   session)

@@ -53,7 +53,7 @@
 ;;;; Run the above example. ;;;;
 
 (defn validate! [session]
-  (doseq [result (query session check-job {})]
+  (doseq [result (query session check-job)]
     (println "Validation issue: " (get-in result [:?issue :description]))))
 
 (defn run-examples 
