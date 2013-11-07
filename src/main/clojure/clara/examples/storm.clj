@@ -7,7 +7,8 @@
             [clara.rules :refer :all]
             [clara.rules.storm :refer :all]
             [clara.examples.sensors :as sensors])
-  (:import [backtype.storm LocalDRPC LocalCluster StormSubmitter]))
+  (:import [backtype.storm LocalDRPC LocalCluster StormSubmitter]
+           [backtype.storm.topology TopologyBuilder]))
 
 (defspout location-device-spout {FACT-STREAM ["fact"]}
   [conf context collector]
@@ -44,15 +45,23 @@
 
      (ack [id]))))
 
+(defn example-topology
+  "Create a local topology for our example."
+  []
+  (let [builder (TopologyBuilder.)]
+
+    (.setSpout builder "temperatures" temperature-spout nil)
+    (.setSpout builder "locations" location-device-spout nil)
+    (attach-topology builder
+                     {:fact-source-ids ["temperatures" "locations"]
+                      :rulesets ['clara.examples.sensors]})
+    (.createTopology builder)))
+
 (defn run-local-topology
   "Runs a local topology with generated facts against the sensor rules."
   []
   (let [cluster (LocalCluster.)
-        topology (topology 
-                  {"temperatures" (spout-spec temperature-spout)
-                   "locations" (spout-spec location-device-spout)}                   
-                  ;; Bolt topology defined by Clara.
-                  (mk-clara-bolts 'clara.examples.sensors ["temperatures" "locations"]))]
+        topology (example-topology)]
 
     (.submitTopology cluster "test" {} topology)
 
