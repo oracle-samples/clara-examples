@@ -10,7 +10,7 @@ See the code for examples using Clara.
 Simply typing ```lein run``` in the project's root directory will run the [simple, in-memory examples](https://github.com/rbrush/clara-examples/tree/master/src/main/clojure/clara/examples).
 
 ### ClojureScript
-Compile the ClojureScript code with ```lein compile``` or ```lein cljsbuild once```, and then open the ```resources/public/index.html``` file in a browser will run the [ClojureScript examples](https://github.com/rbrush/clara-examples/tree/master/rc/main/clojurescript/clara/examples) and display the result.
+Compile the ClojureScript code with ```lein compile``` or ```lein cljsbuild once```, and then open the ```resources/public/index.html``` file in a browser will run the [ClojureScript examples](https://github.com/rbrush/clara-examples/blob/master/src/main/clojurescript/clara/examples/shopping.cljs) and display the result.
 
 ### Storm
 Typing ```lein run -m clara.examples.storm``` will start an in-process Storm topology and run the storm example.
