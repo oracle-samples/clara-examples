@@ -1,9 +1,10 @@
 (ns clara.examples.shopping
   "Shopping example adapted to ClojureScript, updating the DOM to display results. 
    Real examples would actually have styling."
-  (:require-macros [clara.macros :refer [defrule defquery mk-session]]
+  (:require-macros [clara.macros :refer [defrule defquery defsession]]
                    [dommy.macros :refer [node sel sel1]])
-  (:require [dommy.utils :as utils] ; dommy used to manipulate the DOM.
+  (:require [clara.rules.engine :as eng] 
+            [dommy.utils :as utils] ; dommy used to manipulate the DOM.
             [dommy.core :as dommy]
             [clara.rules.accumulators :as acc]
             [clara.rules :refer [insert retract fire-rules query insert! retract!]]))
@@ -26,7 +27,7 @@
 ;;;; Some example rules. ;;;;
 
 (defrule total-purchases
-  (?total <- (acc/sum :cost) :from [Purchase])
+  [?total <- (acc/sum :cost) :from [Purchase]]
   =>
   (insert! (->Total ?total)))
 
@@ -93,6 +94,8 @@
   
   session)
 
+(defsession example-session 'clara.examples.shopping)
+
 (defn run-examples 
   "Function to run the above example."
   []
@@ -100,7 +103,7 @@
   (dommy/append! (sel1 :#shopping) [:.overview "VIP Shopping Example:"])
 
   ;; prints "10 % :vip discount"
-  (-> (mk-session 'clara.examples.shopping) ; Load the rules.
+  (-> example-session
       (insert (->Customer :vip)
               (->Order 2013 :march 20)
               (->Purchase 20 :gizmo)
@@ -113,7 +116,7 @@
   ;; prints: "20 % :summer-special discount"
   ;;         "Free :lunch for promotion :free-lunch-for-gizmo"
   ;;         "Free :widget for promotion :free-widget-month"
-  (-> (mk-session 'clara.examples.shopping) ; Load the rules.
+  (-> example-session
       (insert (->Customer :vip)
               (->Order 2013 :august 20)
               (->Purchase 20 :gizmo)
