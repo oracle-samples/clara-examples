@@ -35,4 +35,7 @@ public class Promotion {
         return "DESCRIPTION: " + description;
     }
 
+   public String getDescription() {
+        return description;	
+   }
 }
