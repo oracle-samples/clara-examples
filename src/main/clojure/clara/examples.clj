@@ -2,6 +2,7 @@
   (require [clara.examples.shopping :as shopping]
            [clara.examples.validation :as validation]
            [clara.examples.sensors :as sensors]
+           [clara.examples.durability :as durability]
            [clara.examples.java.shopping :as jshopping]))
 
 (defn -main []
@@ -18,4 +19,6 @@
   (validation/run-examples)
   (println)
   (println "Sensor examples:")
-  (sensors/run-examples))
+  (sensors/run-examples)
+  (println "Durability examples:")
+  (durability/run-examples))
