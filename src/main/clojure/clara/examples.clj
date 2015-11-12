@@ -3,7 +3,8 @@
            [clara.examples.validation :as validation]
            [clara.examples.sensors :as sensors]
            [clara.examples.durability :as durability]
-           [clara.examples.java.shopping :as jshopping]))
+           [clara.examples.java.shopping :as jshopping]
+           [clara.rules :as r]))
 
 (defn -main []
   (println "Shopping examples:")

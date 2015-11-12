@@ -1,11 +1,12 @@
 (ns clara.examples.shopping
-  "Shopping example adapted to ClojureScript, updating the DOM to display results. 
+  "Shopping example adapted to ClojureScript, updating the DOM to display results.
    Real examples would actually have styling."
   (:require-macros [clara.macros :refer [defrule defquery defsession]]
-                   [dommy.macros :refer [node sel sel1]])
-  (:require [clara.rules.engine :as eng] 
+                   [dommy.core :refer [sel sel1]])
+  (:require [clara.rules.engine :as eng]
             [dommy.utils :as utils] ; dommy used to manipulate the DOM.
             [dommy.core :as dommy]
+            [hipo.core :as hipo]
             [clara.rules.accumulators :as acc]
             [clara.rules :refer [insert retract fire-rules query insert! retract!]]))
 
@@ -75,13 +76,13 @@
 
 ;;;; The section below shows this example in action. ;;;;
 
-(defn show-discounts! 
+(defn show-discounts!
   "Print the discounts from the given session."
   [session]
 
   ;; Destructure and print each discount.
   (doseq [{{reason :reason percent :percent} :?discount} (query session get-best-discount)]
-    (dommy/append! (sel1 :#shopping) [:.discount (str percent "% " reason " discount")]) )
+    (dommy/append! (sel1 :#shopping) (hipo/create [:.discount (str percent "% " reason " discount")])) )
 
   session)
 
@@ -89,18 +90,18 @@
   "Prints promotions from the given session"
   [session]
 
-  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions)] 
-    (dommy/append! (sel1 :#shopping) [:.promotion  (str "Free " type " for promotion " reason)]) )
-  
+  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions)]
+    (dommy/append! (sel1 :#shopping) (hipo/create [:.promotion  (str "Free " type " for promotion " reason)])) )
+
   session)
 
 (defsession example-session 'clara.examples.shopping)
 
-(defn run-examples 
+(defn run-examples
   "Function to run the above example."
   []
 
-  (dommy/append! (sel1 :#shopping) [:.overview "VIP Shopping Example:"])
+  (dommy/append! (sel1 :#shopping) (hipo/create [:.overview "VIP Shopping Example:"]))
 
   ;; prints "10 % :vip discount"
   (-> example-session
@@ -111,7 +112,7 @@
       (fire-rules)
       (show-discounts!))
 
-  (dommy/append! (sel1 :#shopping) [:.overview  "Summer special and widget promotion example:"])
+  (dommy/append! (sel1 :#shopping) (hipo/create [:.overview  "Summer special and widget promotion example:"]))
 
   ;; prints: "20 % :summer-special discount"
   ;;         "Free :lunch for promotion :free-lunch-for-gizmo"

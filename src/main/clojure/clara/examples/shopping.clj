@@ -68,13 +68,13 @@
 
 ;;;; The section below shows this example in action. ;;;;
 
-(defn print-discounts! 
+(defn print-discounts!
   "Print the discounts from the given session."
   [session]
 
   ;; Destructure and print each discount.
-  (doseq [{{reason :reason percent :percent} :?discount} (query session get-best-discount)] 
-    (println percent "%" reason "discount"))
+  (doseq [{{reason :reason percent :percent} :?discount} (query session get-best-discount)]
+    (println percent "%" reason "discount???"))
 
   session)
 
@@ -82,17 +82,17 @@
   "Prints promotions from the given session"
   [session]
 
-  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions)] 
+  (doseq [{{reason :reason type :type} :?promotion} (query session get-promotions)]
     (println "Free" type "for promotion" reason))
-  
+
   session)
 
-(defn run-examples 
+(defn run-examples
   "Function to run the above example."
   []
   (println "VIP shopping example:")
   ;; prints "10 % :vip discount"
-  (-> (mk-session 'clara.examples.shopping) ; Load the rules.
+  (-> (mk-session 'clara.examples.shopping :cache false) ; Load the rules.
       (insert (->Customer :vip)
               (->Order 2013 :march 20)
               (->Purchase 20 :gizmo)
@@ -113,5 +113,4 @@
       (fire-rules)
       (print-discounts!)
       (print-promotions!))
-
   nil)
