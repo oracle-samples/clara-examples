@@ -14,7 +14,10 @@
                  [org.clojure/clojurescript "1.7.48"]
 
                  ;; Dependency for time-based rules example.
-                 [clj-time "0.6.0"]]
+                 [clj-time "0.6.0"]
+
+                 ;; Dependency for rule DSL example.
+                 [instaparse "1.4.1"]]
 
   :plugins [[lein-cljsbuild "1.0.6"]]
   :source-paths ["src/main/clojure"]
