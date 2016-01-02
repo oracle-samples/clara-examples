@@ -1,5 +1,4 @@
-(ns clara.examples.java.shopping
-  (:refer-clojure :exclude [==])
+(ns clara.examples.java.shopping  
   (:require [clara.rules.accumulators :as acc]
             [clara.rules :refer :all])
   (:import [clara.examples.java Customer Order Promotion]))
@@ -17,7 +16,7 @@
    [?promotion <- Promotion])
 
 
-(defn run-examples 
+(defn run-examples
   "Function to run the above example. Also see ExampleMain.java to see this used from Java. "
   []
   (let [session (-> (mk-session 'clara.examples.java.shopping :cache false) ; Load the rules.

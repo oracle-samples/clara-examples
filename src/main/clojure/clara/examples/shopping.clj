@@ -1,5 +1,4 @@
 (ns clara.examples.shopping
-  (:refer-clojure :exclude [==])
   (:require [clara.rules.accumulators :as acc]
             [clara.rules :refer :all]))
 

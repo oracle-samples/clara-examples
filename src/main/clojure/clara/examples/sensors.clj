@@ -1,5 +1,4 @@
 (ns clara.examples.sensors
-  (:refer-clojure :exclude [==])
   (:require [clara.rules.accumulators :as acc]
             [clara.rules :refer :all]))
 
@@ -23,17 +22,17 @@
 
 ;;; Function placeholders to simulate taking actions based on sensor readings. ;;;
 
-(defn alert-temperature! 
+(defn alert-temperature!
   "Fires a temperature alert. A real system probably wouldn't use a println here."
   [value location sector]
   (println "ALERT: temperature of" value "at" location "in sector" sector))
 
-(defn reduce-speed! 
+(defn reduce-speed!
   "Instruct the device to reduce speed."
   [device]
   (println "Reducing speed of " device))
 
-(defn increase-speed! 
+(defn increase-speed!
   "Instructs the device to increase speed."
   [device]
   (println "Increasing speed of " device))
@@ -48,7 +47,7 @@
 ;; more sophisticated logic, like the mean of the last five temperatures to discard outliers.
 (defrule get-current-temperature
   "Get the current temperature at a location by simply looking at the newest reading."
-  [?current-temp <- newest-temp :from [TemperatureReading (== ?location location)]]
+  [?current-temp <- newest-temp :from [TemperatureReading (= ?location location)]]
   =>
   (insert! (->CurrentTemperature (:value ?current-temp) ?location)))
 
@@ -56,32 +55,32 @@
   "Issue a temperature alert. This rule joins the current temperature with the location
    and gathers additional information to fire an alert with context."
   [CurrentTemperature (> value high-threshold)
-                      (== ?location-id location)
-                      (== ?value value)]
+                      (= ?location-id location)
+                      (= ?value value)]
 
-  [Location (== ?location-id id) 
-            (== ?sector sector)]
+  [Location (= ?location-id id)
+            (= ?sector sector)]
   =>
   (alert-temperature! ?value ?location-id ?sector))
 
 
-(defrule reduce-device-speed 
+(defrule reduce-device-speed
   "Reduce the speed of all devices in a location that has a high temperature."
   [CurrentTemperature (> value high-threshold)
-                      (== ?location-id location)]
+                      (= ?location-id location)]
 
   ;; Find all Device records in the location, and bind them to the ?device variable.
-  [?device <- Device (== ?location-id location)] 
+  [?device <- Device (= ?location-id location)]
   =>
   (reduce-speed! ?device))
 
-(defrule increase-device-speed 
+(defrule increase-device-speed
   "Increase the speed of all devices in a location that has a low temperature."
   [CurrentTemperature (< value low-threshold)
-                      (== ?location-id location)]
+                      (= ?location-id location)]
 
   ;; Find all Device records in the location, and bind them to the ?device variable.
-  [?device <- Device (== ?location-id location)] 
+  [?device <- Device (= ?location-id location)]
   =>
   (increase-speed! ?device))
 
@@ -89,16 +88,16 @@
   "Run the examples."
   []
   ;; Create a session with our location and device information.
-  (let [session 
+  (let [session
         (-> (mk-session 'clara.examples.sensors)
-            (insert (->Location :room-1 :sector-5 ) 
-                    (->Location :room-2 :sector-5 ) 
+            (insert (->Location :room-1 :sector-5 )
+                    (->Location :room-2 :sector-5 )
                     (->Device 123 :room-1)
-                    (->Device 456 :room-1)              
+                    (->Device 456 :room-1)
                     (->Device 786 :room-2)))]
 
     (-> session
-        
+
         ;; Insert some temperature readings, the latest of which triggers an alert for room 1.
         (insert (->TemperatureReading 100 1 :room-1))
         (insert (->TemperatureReading 110 2 :room-1))
@@ -112,5 +111,3 @@
         (fire-rules))) ;; Prints increase speed messages for devices in room 1.
 
   nil)
-
-
