@@ -81,7 +81,7 @@
 ;;;; Rules written in Clojure and combined with externally-defined rules.
 
 (defrule total-purchases
-  (?total <- (acc/sum :cost) :from [Purchase])
+  [?total <- (acc/sum :cost) :from [Purchase]]
   =>
   (insert! (->Total ?total)))
 
