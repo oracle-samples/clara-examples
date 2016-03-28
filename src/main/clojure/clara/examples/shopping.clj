@@ -19,7 +19,7 @@
 ;;;; Some example rules. ;;;;
 
 (defrule total-purchases
-  (?total <- (acc/sum :cost) :from [Purchase])
+  [?total <- (acc/sum :cost) :from [Purchase]]
   =>
   (insert! (->Total ?total)))
 
