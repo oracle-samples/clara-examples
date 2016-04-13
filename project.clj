@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[com.google.guava/guava "15.0"] ; Explicitly pull new Guava version for dependency conflicts.
                  [org.clojure/clojure "1.7.0"]
-                 [org.toomuchcode/clara-rules "0.10.0"]
+                 [org.toomuchcode/clara-rules "0.11.0"]
                  [org.toomuchcode/clara-tools "0.1.1"]
 
                  ;; Dependencies for ClojureScript example.

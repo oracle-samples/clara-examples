@@ -4,6 +4,7 @@
            [clara.examples.sensors :as sensors]
            [clara.examples.durability :as durability]
            [clara.examples.java.shopping :as jshopping]
+           [clara.examples.booleans :as booleans]
            [clara.rules :as r]))
 
 (defn -main []
@@ -21,5 +22,8 @@
   (println)
   (println "Sensor examples:")
   (sensors/run-examples)
+  (println)
+  (booleans/run-examples)
+  (println)
   (println "Durability examples:")
   (durability/run-examples))
