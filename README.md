@@ -1,24 +1,37 @@
-# clara-examples
+# _About_
 
-Example usage of Clara.
+This project contains example use [clara-rules](http://github.com/cerner/clara-rules), a Clojure-based rule engine. It is primarily for documentation and examples for those learning Clara.
 
-## Usage
+# _Usage_
 
-See the code for examples using Clara.
+The Clojure examples can be run via the [Leiningen](http://leiningen.org) build system. Simply check out this project and run the following from its root directory on a system where Leiningen is installed:
 
-### In-memory
-Simply typing ```lein run``` in the project's root directory will run the [simple, in-memory examples](https://github.com/rbrush/clara-examples/tree/master/src/main/clojure/clara/examples).
+```bash
+lein run -m clara.examples
+```
 
-### ClojureScript
-Compile the ClojureScript code with ```lein compile``` or ```lein cljsbuild once```, and then open the ```resources/public/index.html``` file in a browser will run the [ClojureScript examples](https://github.com/rbrush/clara-examples/blob/master/src/main/clojurescript/clara/examples/shopping.cljs) and display the result.
+To run the [ClojureScript](http://clojurescript.org) examples, compile the code with ```lein compile``` or ```lein cljsbuild once```, and then open the ```resources/public/index.html``` file in a browser. This will run the [shopping example](https://github.com/cerner/clara-examples/blob/master/src/main/clojurescript/clara/examples/shopping.cljs) in ClojureScript and display the result.
 
-### Tools
-Functionality from [clara-tools](https://github.com/rbrush/clara-tools), including browser-based views of the working memory and rule structures, can be run with the following command:
+# _Building_
 
-```lein run -m clara.examples.tools```
+Like clara-rules, this example project is built, tested, and deployed using [Leiningen](http://leiningen.org).  
 
-## License
+# _Communication_
 
-Copyright © 2013 Ryan Brush
+Questions can be posted to the [Clara Rules Google Group](https://groups.google.com/forum/?hl=en#!forum/clara-rules) or the [Slack channel](https://clojurians.slack.com/messages/clara/).  
 
-Distributed under the Eclipse Public License, the same as Clojure.
+# Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
+
+# LICENSE
+
+Copyright 2016 Cerner Innovation, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+&nbsp;&nbsp;&nbsp;&nbsp;http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+
