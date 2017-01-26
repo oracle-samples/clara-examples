@@ -5,6 +5,7 @@
            [clara.examples.durability :as durability]
            [clara.examples.java.shopping :as jshopping]
            [clara.examples.booleans :as booleans]
+           [clara.examples.fact-type-options :as type-opts]
            [clara.rules :as r]))
 
 (defn -main []
@@ -26,4 +27,10 @@
   (booleans/run-examples)
   (println)
   (println "Durability examples:")
-  (durability/run-examples))
+  (durability/run-examples)
+  (println)
+  (println "Boolean expression examples:")
+  (booleans/run-examples)
+  (println)
+  (println "Fact type options examples:")
+  (type-opts/run-examples))
