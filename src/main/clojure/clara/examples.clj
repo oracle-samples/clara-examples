@@ -2,7 +2,6 @@
   (require [clara.examples.shopping :as shopping]
            [clara.examples.validation :as validation]
            [clara.examples.sensors :as sensors]
-           [clara.examples.durability :as durability]
            [clara.examples.java.shopping :as jshopping]
            [clara.examples.booleans :as booleans]
            [clara.examples.fact-type-options :as type-opts]
@@ -25,9 +24,6 @@
   (sensors/run-examples)
   (println)
   (booleans/run-examples)
-  (println)
-  (println "Durability examples:")
-  (durability/run-examples)
   (println)
   (println "Boolean expression examples:")
   (booleans/run-examples)
