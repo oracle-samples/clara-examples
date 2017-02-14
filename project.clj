@@ -5,7 +5,7 @@
             :url "https://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[com.google.guava/guava "15.0"] ; Explicitly pull new Guava version for dependency conflicts.
                  [org.clojure/clojure "1.7.0"]
-                 [com.cerner/clara-rules "0.13.0-RC7"]
+                 [com.cerner/clara-rules "0.13.0"]
                  [org.toomuchcode/clara-tools "0.1.1"]
 
                  ;; Dependencies for ClojureScript example.
