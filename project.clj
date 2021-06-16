@@ -16,7 +16,10 @@
                  [clj-time "0.6.0"]
 
                  ;; Dependency for rule DSL example.
-                 [instaparse "1.4.1"]]
+                 [instaparse "1.4.1"]
+                 
+                 ;; Throws java.lang.ClassNotFoundException: javax.xml.bind.DatatypeConverter if not installed
+                 [javax.xml.bind/jaxb-api "2.3.1"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]]
   :source-paths ["src/main/clojure"]
